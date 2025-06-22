@@ -1,0 +1,25 @@
+
+
+fn range x y z {
+	res = []
+
+	type = typeof(y)
+	if type == "undef" {
+		y = x
+		x = 0
+	}
+
+	if !y {
+		y = x
+	}
+
+	x = y ? x : 0
+	for i = x; i < y; i++ {
+		res.push(z ? z : i)
+	}
+
+	res
+}
+
+i = range(1, 10, 2)
+io.print(i)

@@ -1,0 +1,41 @@
+
+use 'plot' as plot
+
+{plot} = plot
+
+f = eval("math = mother.import('Math') fn f x: {input('Expression? ')}")
+
+# plot.animateScale(f, 10)
+
+scale = {
+  x: 0.1,
+  y: 1
+}
+
+delay = 100
+work = timeout(fn::plot(f, scale), delay)
+
+keypress(fn: key {
+
+  {name} = key
+
+  dx = 0.01
+  dy = 0.1
+
+  if name == "right": scale.x = scale.x + dx
+  else if name == "left": scale.x = scale.x - dx
+
+  if name == "up": scale.y = scale.y + dy
+  else if name == "down": scale.y = scale.y - dy
+
+  work.stop()
+
+  work = timeout(fn::plot(f, scale), delay)
+
+})
+
+t = task(fn: {
+    plot(f, scale)
+})
+
+alive(t.run())

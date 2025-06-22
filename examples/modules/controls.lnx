@@ -1,0 +1,81 @@
+
+# Luna Module: Control.lnx
+# WRITTEN BY: The author of Luna
+
+api = mother.import("pkg:robotjs"); # CREDIT: << RobotJS on NPM >>
+
+states: out = {
+	up: 'up',
+	down: 'down'
+}
+
+# API: Move
+out fn move x y {
+    api.moveMouse(x, y)
+}
+
+# API: Toggle String
+out fn toggle key state=(states.down) {
+    api.keyToggle(key, state);
+}
+
+# API: Click String
+out fn click key {
+    api.keyTap(key);
+}
+
+# API: Toggle String
+out fn toggle key state {
+    api.keyToggle(key, state);
+}
+
+# API: Type String
+out fn type str {
+    api.typeString(str)
+}
+
+# API: Click
+out fn mouseclick key {
+    api.mouseClick(key)
+}
+
+# API: Click
+out fn mousetoggle key state {
+    api.mouseToggle(state, key)
+}
+
+# API: Scroll
+out fn scroll x y {
+    api.scrollMouse(x, y)
+}
+
+# API: Drag
+out fn drag x y {
+    api.mouseDrag(x, y)
+}
+
+# API: Get Position
+out fn pos {
+    obj = api.getMousePos()
+
+    {
+        x: obj.x,
+        y: obj.y
+    }
+}
+
+# API: Get Color
+out fn color x y {
+    api.getPixelColor(x, y)
+}
+
+# API: Size
+out fn size {
+    obj = api.getScreenSize()
+
+    {
+        width: obj.width,
+        height: obj.height
+    }
+}
+
