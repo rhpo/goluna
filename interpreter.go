@@ -295,7 +295,7 @@ func evaluateAssignmentExpression(node *AssignmentExpr, env *Environment) (Runti
 		}
 
 		var property RuntimeValue
-		if memberExpr.Property.Kind() == IDENTIFIER_NODE {
+		if memberExpr.Property.Kind() == IDENTIFIER_NODE && !memberExpr.Computed {
 			ident := memberExpr.Property.(*Identifier)
 			property = MakeString(ident.Value)
 		} else {
@@ -306,6 +306,16 @@ func evaluateAssignmentExpression(node *AssignmentExpr, env *Environment) (Runti
 			property = prop
 		}
 
+		var key string
+		var keyInt int
+		if str, ok := property.(*StringValue); ok {
+			key = str.Value
+		} else {
+			keyInt = int(property.(*NumberValue).Value)
+			numVal := fmt.Sprint(keyInt)
+			key = numVal
+		}
+
 		value, err := Evaluate(node.Value, env)
 		if err != nil {
 			return nil, err
@@ -313,17 +323,11 @@ func evaluateAssignmentExpression(node *AssignmentExpr, env *Environment) (Runti
 		// is it object or array
 		if object.Type() == OBJECT_TYPE {
 			objectVal := object.(*ObjectValue)
-			if str, ok := property.(*StringValue); ok {
-				objectVal.Properties[str.Value] = value
-			} else {
-				numVal := fmt.Sprint(property.(*NumberValue).Value)
-				objectVal.Properties[numVal] = value
-			}
+			objectVal.Properties[key] = value
 			return value, nil
 		} else if object.Type() == ARRAY_TYPE {
 			arrayVal := object.(*ArrayValue)
-			index := int(property.(*NumberValue).Value)
-			arrayVal.Elements[index] = value
+			arrayVal.Elements[keyInt] = value
 			return value, nil
 		} else {
 			return nil, fmt.Errorf("cannot assign to non-object (%s)", object.Type())
