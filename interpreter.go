@@ -288,6 +288,46 @@ func evaluateAssignmentExpression(node *AssignmentExpr, env *Environment) (Runti
 		} else {
 			return env.DeclareVar(identifier.Value, value, false), nil
 		}
+	} else if memberExpr, ok := node.Assigne.(*MemberExpr); ok {
+		object, err := Evaluate(memberExpr.Object, env)
+		if err != nil {
+			return nil, err
+		}
+
+		var property RuntimeValue
+		if memberExpr.Property.Kind() == IDENTIFIER_NODE {
+			ident := memberExpr.Property.(*Identifier)
+			property = MakeString(ident.Value)
+		} else {
+			prop, err := Evaluate(memberExpr.Property, env)
+			if err != nil {
+				return nil, err
+			}
+			property = prop
+		}
+
+		value, err := Evaluate(node.Value, env)
+		if err != nil {
+			return nil, err
+		}
+		// is it object or array
+		if object.Type() == OBJECT_TYPE {
+			objectVal := object.(*ObjectValue)
+			if str, ok := property.(*StringValue); ok {
+				objectVal.Properties[str.Value] = value
+			} else {
+				numVal := fmt.Sprint(property.(*NumberValue).Value)
+				objectVal.Properties[numVal] = value
+			}
+			return value, nil
+		} else if object.Type() == ARRAY_TYPE {
+			arrayVal := object.(*ArrayValue)
+			index := int(property.(*NumberValue).Value)
+			arrayVal.Elements[index] = value
+			return value, nil
+		} else {
+			return nil, fmt.Errorf("cannot assign to non-object (%s)", object.Type())
+		}
 	}
 
 	return nil, fmt.Errorf("invalid assignment target")
