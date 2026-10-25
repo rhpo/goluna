@@ -1,4 +1,4 @@
-# GOLuna 🌙 — The Go Port of Luna
+# GOLuna 🌙, The Go Port of Luna
 
 **GOLuna** is the Go implementation of [Luna](https://github.com/rhpo/luna), a high-level programming language originally written in TypeScript. It brings Luna's expressive syntax and scripting-oriented design to a Go-based implementation.
 
