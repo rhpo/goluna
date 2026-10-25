@@ -1,6 +1,8 @@
+ # I made it to compare between the speed of Luna and python knowing that they're both interpreted
+
 import time
 
-start = time.time()  # current time in seconds
+start = time.time() 
 
 x = 0
 
