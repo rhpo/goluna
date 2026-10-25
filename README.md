@@ -101,11 +101,11 @@ Refer to the implementation and its tests to determine which features are curren
 
 The original Luna implementation follows a language-processing pipeline:
 
-1. **Tokenization** — Convert source code into tokens.
-2. **Parsing** — Build an abstract syntax tree (AST) from the token stream.
-3. **Preprocessing** — Process supported embedded code and other preprocessing directives.
-4. **Evaluation** — Interpret the resulting syntax tree.
-5. **Runtime** — Represent values and execute language operations.
+1. **Tokenization** : Convert source code into tokens.
+2. **Parsing** : Build an abstract syntax tree (AST) from the token stream.
+3. **Preprocessing** : Process supported embedded code and other preprocessing directives.
+4. **Evaluation** : Interpret the resulting syntax tree.
+5. **Runtime** : Represent values and execute language operations.
 
 <div align="center">
 
@@ -286,7 +286,7 @@ See the applicable `LICENSE` file in the GOLuna repository to determine the lice
 
 ## Author
 
-**Ramy Hadid** — [@rhpo](https://github.com/rhpo)
+**Ramy Hadid** : [@rhpo](https://github.com/rhpo)
 
 - [GitHub](https://github.com/rhpo)
 - [LinkedIn](https://www.linkedin.com/in/ramy-hadid-15aa70243/)
